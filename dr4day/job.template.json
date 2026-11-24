@@ -1,5 +1,5 @@
 {
- "_note": "File on/after 2026-12-02 11:00 UTC as compete/dark-lens-dr4/job.json (drop this _note) and set workdir to an empty folder of that run. Setup clones the committed code fresh.",
+ "_note": "File on/after 2026-12-02 11:00 UTC as compete/dark-lens-dr4/job.json (drop this _note) and set workdir to an empty folder of that run. Setup clones the committed code fresh. Amendment 1 (2026-11-24) added the Gaia19bld control step.",
  "name": "dark-lens-dr4-v1",
  "kind": "compete",
  "workdir": "<an empty folder in the DR4-day run, e.g. .../darkday>",
@@ -11,13 +11,14 @@
   "pip install -r /work/requirements.txt"
  ],
  "run": [
-  "python -m unittest -v test_darklens",
-  "python bh_job.py --data-dir /data --out-dir /out"
+  "python -m unittest -v test_darklens test_control",
+  "python bh_job.py --data-dir /data --out-dir /out",
+  "python control_job.py --data-dir /data --out-dir /out"
  ],
  "network": true,
  "data_urls": [],
  "data_key": "dark-lens-dr4",
  "cpu": 1,
  "memory_gb": 1,
- "timeout_minutes": 360
+ "timeout_minutes": 420
 }
