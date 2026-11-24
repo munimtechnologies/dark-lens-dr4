@@ -1,0 +1,23 @@
+{
+ "_note": "File on/after 2026-12-02 11:00 UTC as compete/dark-lens-dr4/job.json (drop this _note) and set workdir to an empty folder of that run. Setup clones the committed code fresh.",
+ "name": "dark-lens-dr4-v1",
+ "kind": "compete",
+ "workdir": "<an empty folder in the DR4-day run, e.g. .../darkday>",
+ "image": "python:3.12",
+ "setup": [
+  "git clone --depth 1 https://github.com/munimtechnologies/dark-lens-dr4 /tmp/d",
+  "git clone --depth 1 https://github.com/munimtechnologies/gj3512-giants-dr4 /tmp/g",
+  "python -c \"import os,shutil; [shutil.copy2(os.path.join('/tmp/d', f), '/work/' + f) for f in os.listdir('/tmp/d') if f.endswith(('.py', '.txt', '.md'))]; shutil.copy2('/tmp/g/io_gaia.py', '/work/io_gaia.py'); shutil.copytree('/tmp/g/gaiaorb', '/work/gaiaorb')\"",
+  "pip install -r /work/requirements.txt"
+ ],
+ "run": [
+  "python -m unittest -v test_darklens",
+  "python bh_job.py --data-dir /data --out-dir /out"
+ ],
+ "network": true,
+ "data_urls": [],
+ "data_key": "dark-lens-dr4",
+ "cpu": 1,
+ "memory_gb": 1,
+ "timeout_minutes": 360
+}
